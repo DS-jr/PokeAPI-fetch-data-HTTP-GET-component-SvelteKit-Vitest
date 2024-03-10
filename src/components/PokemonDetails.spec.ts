@@ -28,6 +28,15 @@ describe("PoKe detAils", () => {
         await waitFor(() => getByText(/Weight: 20/i));
     })
 
+    it('should show error when the API fails', async () => {
+        global.fetch = vi.fn().mockImplementationOnce(() => {
+            return Promise.reject();
+        });
+
+        const {getByText } = render(PokemonDetails);
+
+        await waitFor(() => getByText(/Error while loading the data/i));
+    })
 })
     
 
